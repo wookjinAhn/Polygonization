@@ -5,6 +5,7 @@
 #ifndef POLYGONIZATION_QUICKHULL_HPP
 #define POLYGONIZATION_QUICKHULL_HPP
 
+#include <iostream>
 #include <algorithm>
 #include <vector>
 #include <camel-euclid/Vector.hpp>
@@ -24,10 +25,9 @@ public:
     void Run();
 
 private:
-    void findSide();
-    void quickHull();
-    void findHull();
-    
+    int findSide(camelVector::Point3D point1, camelVector::Point3D point2, camelVector::Point3D point);
+    float lineDist(camelVector::Point3D point1, camelVector::Point3D point2, camelVector::Point3D point);
+    void quickHull(const std::vector<camelVector::Point3D>& data, camelVector::Point3D point1, camelVector::Point3D point2, int side);
 
     std::vector<camelVector::Point3D> mInputData;
     std::vector<camelVector::Point3D> mOutputData;
