@@ -7,10 +7,10 @@
 #include "QuickHull/QuickHull.hpp"
 #include "ConvexHull/ConvexHull.hpp"
 
-void fromPCD(std::vector<camelVector::Point3D>& data, int file)
+void fromPCD(std::vector<camel::Point3D>& data, std::string file)
 {
     std::ifstream fin;
-    std::string filePath = "/home/wj/Desktop/Data/polygonize/" + std::to_string(file) + ".pcd";
+    std::string filePath = "/home/wj/Desktop/Data/polygonize/" + file + ".pcd";
     fin.open(filePath);
     std::string line;
 
@@ -25,7 +25,7 @@ void fromPCD(std::vector<camelVector::Point3D>& data, int file)
                 float dataX, dataY, dataZ;
                 std::istringstream iss(line);
                 iss >> dataX >> dataY >> dataZ;
-                camelVector::Point3D point = { dataX, dataY, dataZ };
+                camel::Point3D point = { dataX, dataY, dataZ };
                 data.push_back(point);
             }
             num++;
@@ -34,7 +34,7 @@ void fromPCD(std::vector<camelVector::Point3D>& data, int file)
     fin.close();
 }
 
-void toPCD(std::vector<camelVector::Point3D>& data)
+void toPCD(std::vector<camel::Point3D>& data)
 {
     std::cout << "output : " << data.size() << std::endl;
     std::string outputPath = "/home/wj/Desktop/Data/polygonize/output/";
@@ -79,8 +79,9 @@ int main()
 {
     const auto startTime = std::chrono::high_resolution_clock::now();
 
-    std::vector<camelVector::Point3D> inputData;
-    fromPCD(inputData, 336);
+    std::vector<camel::Point3D> inputData;
+    std::string file = "104_03";    // 30_03    104_03   116_03  118_03  122_03  264_0315    336_043
+    fromPCD(inputData, file);
 
     QuickHull quickHull;
     quickHull.SetInputData(inputData);
@@ -89,7 +90,15 @@ int main()
 
     std::cout << quickHull.GetOutputData().size() << std::endl;
 
-    std::vector<camelVector::Point3D> outputData = quickHull.GetOutputData();
+    std::vector<camel::Point3D> outputData = quickHull.GetOutputData();
+
+//    ConvexHull convexHull;
+//    convexHull.SetInputData(inputData);
+//    std::cout << convexHull.GetInputData().size() << std::endl;
+//    convexHull.Run();
+//    std::cout << convexHull.GetOutputData().size() << std::endl;
+//    std::vector<camel::Point3D> outputData = convexHull.GetOutputData();
+
     toPCD(outputData);
 
     const auto stopTime = std::chrono::high_resolution_clock::now();

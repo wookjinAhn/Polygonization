@@ -8,29 +8,35 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <camel-euclid/Vector.hpp>
+#include "../Point/Point3D.hpp"
 
 class QuickHull
 {
 public:
     QuickHull();
-    QuickHull(std::vector<camelVector::Point3D>& inputPoint);
+    QuickHull(std::vector<camel::Point3D>& inputPoint);
 
-    void SetInputData(std::vector<camelVector::Point3D>& inputPoint);
-    std::vector<camelVector::Point3D> GetInputData() const;
+    void SetInputData(std::vector<camel::Point3D>& inputPoint);
+    std::vector<camel::Point3D> GetInputData() const;
 
-    void SetOutputData(std::vector<camelVector::Point3D>& outPoint);
-    std::vector<camelVector::Point3D> GetOutputData() const;
+    void SetOutputData(std::vector<camel::Point3D>& outPoint);
+    std::vector<camel::Point3D> GetOutputData() const;
 
     void Run();
 
 private:
-    int findSide(camelVector::Point3D point1, camelVector::Point3D point2, camelVector::Point3D point);
-    float lineDist(camelVector::Point3D point1, camelVector::Point3D point2, camelVector::Point3D point);
-    void quickHull(const std::vector<camelVector::Point3D>& data, camelVector::Point3D point1, camelVector::Point3D point2, int side);
+    int findSide(camel::Point3D point1, camel::Point3D point2, camel::Point3D point);
+    float lineDist(camel::Point3D point1, camel::Point3D point2, camel::Point3D point);
+    void quickHull(const std::vector<camel::Point3D>& data, camel::Point3D point1, camel::Point3D point2, int side);
 
-    std::vector<camelVector::Point3D> mInputData;
-    std::vector<camelVector::Point3D> mOutputData;
+    void getAngleEachPoints();
+    static bool DescendingByAngle(camel::Point3D& firstPoint, camel::Point3D& secondPoint);
+    void sortByAngle();
+
+    std::vector<camel::Point3D> mInputData;
+    std::vector<camel::Point3D> mOutputData;
+
+    camel::Point3D mInitialPoint;
 };
 
 
